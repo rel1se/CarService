@@ -15,19 +15,15 @@ import java.util.*;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, updatable = false)
     private String email;
-    @Column(name = "phone_number")
     private String phoneNumber;
-    @Column(name = "name")
     private String name;
-    @Column(name = "active")
-    private boolean active;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "image_id")
     private Image avatar;
+    private boolean active;
     @Column(name = "password", length = 1000)
     private String password;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -38,6 +34,10 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
             mappedBy = "user")
     private List<Part> parts = new ArrayList<>();
+    public void addPartToUser(Part part){
+        part.setUser(this);
+        parts.add(part);
+    }
     private LocalDateTime dateOfCreated;
     @PrePersist
     private void init(){

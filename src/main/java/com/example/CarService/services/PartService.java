@@ -52,6 +52,10 @@ public class PartService {
         partFromDb.setPreviewImageId(partFromDb.getImages().get(0).getId());
         partRepository.save(part);
     }
+    public User getUserByPrincipal(Principal principal){
+        if (principal == null ) return new User();
+        return userRepository.findByEmail(principal.getName());
+    }
     private Image toImageEntity(MultipartFile file) throws IOException {
         Image image = new Image();
         image.setName(file.getName());
@@ -61,12 +65,22 @@ public class PartService {
         image.setBytes(file.getBytes());
         return image;
     }
-    public User getUserByPrincipal(Principal principal){
-        if (principal == null ) return new User();
-        return userRepository.findByEmail(principal.getName());
-    }
-    public void deletePart(Long id){
-        partRepository.deleteById(id);
+
+    public void deletePart(User user, Long id){
+        Part part = partRepository.findById(id)
+                        .orElse(null);
+        if (part != null){
+            if (part.getUser().getId().equals(user.getId())){
+                partRepository.delete(part);
+                log.info("Part with id = {} was deleted", id);
+            }
+            else{
+                log.error("User: {} havent this part with id = {}", user.getEmail(),id);
+            }
+        }
+        else{
+            log.error("Part with id = {} is not found", id);
+        }
     }
 
     public Part getPartById(Long id) {

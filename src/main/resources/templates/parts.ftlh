@@ -1,52 +1,62 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Car Service</title>
-</head>
-<body>
-    <h1>CAR SERVICE</h1>
-    <#if user.email??>
-        <h3>Имя пользователя: <i>${user.name}</i></h3>
-        <form action="/logout" method="post">
-            <input type = "hidden" name="_csrf" value="${_csrf.token}">
-            <input type = "submit" value="Выйти">
-        </form>
-        <#if user.isAdmin()>
-            <a href="/admin">Панель администратора</a>
-        </#if>
-    <#else>
-        <a href = "/login">Войти</a><hr>
-    </#if>
-    <p>Сеть автосервисов по всей России</p>
-    <form action ="/" method="get">
-        Поиск по марке автомобиля: <input type="text" name = "title">
-        <input type="submit" value = "Поиск"/>
+<#import "blocks/templates.ftlh" as t>
+<@t.template user>
+    <h1>Поиск заявок</h1><hr>
+    <form method="get" action="/">
+        <div class = "row">
+            <div class = "col">
+                <div class="form-group col-md-10" >
+                    <label for="searchCity">Город</label>
+                    <select id="searchCity" class="form-control">
+                        <option value="">Город не выбран</option>
+                        <option value="Москва">Москва</option>
+                        <option value="Иркутск">Иркутск</option>
+                        <option value="Санкт Петербург">Санкт Петербург</option>
+                    </select>
+                </div>
+            </div>
+            <div class = "col">
+                <div class="form-group col-md-14">
+                    <label for="searchWord">Поиск по заявкам</label>
+                    <input type="text" name="searchWord" <#if searchWord??>value="${searchWord}"</#if> class="form-control" id="searchWord"><br>
+                </div>
+                <button style="width: 100%" type="submit" class="btn btn-dark">Поиск</button>
+            </div>
+        </div> <br>
+<#--        <div class="form-row">-->
+<#--            <div class="form-group col-md-2">-->
+<#--                <label for="searchCity">Город</label>-->
+<#--                <select id="searchCity" class="form-control">-->
+<#--                    <option value="">Город не выбран</option>-->
+<#--                    <option value="Москва">Москва</option>-->
+<#--                    <option value="Иркутск">Иркутск</option>-->
+<#--                    <option value="Санкт Петербург">Санкт Петербург</option>-->
+<#--                </select>-->
+<#--            </div>-->
+<#--            <div class="form-group col-md-10">-->
+<#--                <label for="searchWord">Поиск по заявкам</label>-->
+<#--                <input type="text" name="searchWord" <#if searchWord??>value="${searchWord}"</#if> class="form-control"-->
+<#--                       id="searchWord">-->
+<#--            </div>-->
+<#--            <button style="width: 100%" type="submit" class="btn btn-dark">Поиск</button>-->
+<#--        </div><br>-->
     </form>
-    <#list parts as part>
-        <div>
-            <p><b>${part.title}</b> ${part.description} <a href="/part/${part.id}">Подробнее</a></p>
-        </div>
+    <div class="card-columns">
+        <#list parts as part>
+            <a href="/part/${part.id}" class="part-link">
+                <div class="card text-white bg-dark my-3 part">
+                    <img src="/images/${part.previewImageId}"
+                         class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">${part.title}</h5>
+                        <p class="card-text">${part.price}</p>
+                    </div>
+                    <div class="card-footer">
+                        ${part.city}
+                    </div>
+                </div>
+            </a>
         <#else>
-        <h3>Автомобилей нет</h3>
-    </#list>
-    <#if user.email??>
-        <hr>
-        <h3>Добавить новую запчасть</h3>
-        <form action="/part/create" method="post" enctype="multipart/form-data">
-            Марка машины: <input type="text" name = "title"><br><br>
-            Кузов авто: <input type="text" name = "description"><br><br>
-            Год выпуска: <input type="number" name = "price"><br><br>
-            Местоположение: <input type="text" name = "city"><br><br>
-            Первая фотография: <input type="file" name = "file1"><br><br>
-            Вторая фотография: <input type="file" name = "file2"><br><br>
-            Третья фотография: <input type="file" name = "file3"><br><br>
-            <input type = "hidden" name = "_csrf" value="${_csrf.token}">
-            <input type="submit" value="Добавить заявку на починку автомобиля">
-        </form>
-    </#if>
-</body>
-</html>
+            <h1 style="text-align: center">Не найдено</h1>
+        </#list>
+    </div>
+</@t.template>

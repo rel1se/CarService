@@ -1,23 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Car Service</title>
-</head>
-<body>
-<h1>CAR SERVICE</h1><hr>
-<h3>Подробная информация о пользователе ${user.name}</h3>
-<b>Номер телефона: </b> ${user.phoneNumber}<br>
-<b>Email: </b> ${user.email}<br>
-<h4>Заявки пользователя ${user.name}</h4>
-    <#list parts as part>
-        <div>
-            <p><b>${part.title}</b> ${part.description} | <a href="/part/${part.id}">Подробнее...</a></p>
-        </div>
-    <#else>
-    <h3>Заявок нет</h3>
-</#list>
-<#if errorMessage??>
-    <h2 style="color: red">${errorMessage}</h2>
-</#if>
-</body>
-</html>
+<#import "blocks/templates.ftlh" as t>
+<@t.template userByPrincipal>
+    <h1 style="text-align: center">Информация о пользователе</h1>
+    <hr>
+    <div style="text-align: center">
+        <img src="/static/images/avatar.png"
+             style="border:2px solid black; border-radius: 20px" height="120">
+        <br>
+        <br>
+        <h2>${user.name}</h2>
+        <br>
+        Номер телефона: <b>${user.phoneNumber}</b>
+    </div>
+    <br>
+    <hr>
+    <h1 style="text-align: center">Товары пользователя ${user.name}</h1>
+    <br>
+    <div class="card-columns">
+        <#list parts as part>
+            <a href="/product/${part.id}" class="product-link">
+                <div class="card text-white bg-dark my-3 product">
+
+                    <img src="/images/${part.previewImageId}"
+                         class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">${part.title}</h5>
+                        <p class="card-text">${part.price} ₽</p>
+                    </div>
+                    <div class="card-footer">
+                        ${part.user.name}
+                    </div>
+                </div>
+            </a>
+        <#else>
+            <h1 style="text-align: center">Не найдено</h1>
+        </#list>
+    </div>
+</@t.template>
