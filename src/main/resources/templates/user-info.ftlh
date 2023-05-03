@@ -17,9 +17,8 @@
     <br>
     <div class="card-columns">
         <#list parts as part>
-            <a href="/product/${part.id}" class="product-link">
+            <a href="/part/${part.id}" class="part-link">
                 <div class="card text-white bg-dark my-3 product">
-
                     <img src="/images/${part.previewImageId}"
                          class="card-img-top">
                     <div class="card-body">

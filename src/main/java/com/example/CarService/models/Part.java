@@ -22,6 +22,11 @@ public class Part {
     private String description;
     private String price;
     private String city;
+    public Part(Long id, String title){
+        this.id = id;
+        this.title = title;
+    }
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
             mappedBy = "part")
     private List<Image> images = new ArrayList<>();

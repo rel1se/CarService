@@ -1,15 +1,16 @@
 package com.example.CarService.controllers;
 
-import com.example.CarService.models.Image;
 import com.example.CarService.models.Part;
 import com.example.CarService.models.User;
 import com.example.CarService.services.PartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.w3c.dom.html.HTMLDocument;
 
 import java.io.IOException;
 import java.security.Principal;

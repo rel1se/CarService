@@ -1,7 +1,7 @@
 package com.example.CarService.controllers;
 
 import com.example.CarService.models.Image;
-import com.example.CarService.repositories.ImageRepository;
+import com.example.CarService.models.repositories.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;

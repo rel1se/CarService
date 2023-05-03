@@ -34,6 +34,13 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
             mappedBy = "user")
     private List<Part> parts = new ArrayList<>();
+    public User(){
+
+    }
+    public User(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
     public void addPartToUser(Part part){
         part.setUser(this);
         parts.add(part);

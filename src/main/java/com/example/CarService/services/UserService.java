@@ -2,13 +2,12 @@ package com.example.CarService.services;
 
 import com.example.CarService.models.User;
 import com.example.CarService.models.enums.Role;
-import com.example.CarService.repositories.UserRepository;
+import com.example.CarService.models.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;

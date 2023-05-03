@@ -1,6 +1,6 @@
 package com.example.CarService.services;
 
-import com.example.CarService.repositories.UserRepository;
+import com.example.CarService.models.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
